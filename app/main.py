@@ -4,12 +4,17 @@ from app.parser import parse_whatsapp_txt
 from app.feature_builder import build_reply_dataset
 from app.model import train_and_predict
 import random
+import os
 from app.excuse_generator import generate_excuses
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 
 app = FastAPI(title="ORACLE API", version="1.0")
-
+@app.get("/")
+def read_root():
+    # Serves index.html from the root directory
+    return FileResponse(os.path.join(os.path.dirname(__file__), "../index.html"))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Adjust for production
