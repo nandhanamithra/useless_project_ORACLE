@@ -32,3 +32,15 @@ def parse_whatsapp_txt(file_bytes: bytes) -> pd.DataFrame:
     df = df.dropna(subset=["timestamp"]).sort_values("timestamp").reset_index(drop=True)
     
     return df[["timestamp", "sender", "message"]]
+
+# In app/parser.py
+import re
+
+def normalize_sender_name(name: str) -> str:
+    """Strips contact tags, nicknames, and special characters."""
+    clean_name = re.sub(r'[^a-zA-Z0-9]', '', name).lower()
+    if "jisna" in clean_name:
+        return "Jisna"
+    if "mithra" in clean_name:
+        return "Mithra"
+    return name.strip()

@@ -1,1 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReplyTime - Reply Time Calculator</title>
 
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  
+  <script>
+    if (history.scrollRestoration) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  </script>
+  
+  <style>
+    :root {
+      --bg: #080b24;
+      --panel: #111334;
+      --panel-2: #15183d;
+      --border: rgba(167, 139, 250, .22);
+      --purple: #a855f7;
+      --pink: #ec4899;
+      --cyan: #06b6d4;
+      --text: #f5f3ff;
+      --muted: #a6a3bd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 10%, #F7B1AB, transparent 30%),
+        radial-gradient(circle at 90% 20%, #D8AA96, transparent 28%),
+        radial-gradient(circle at 10% 90%, #F7B1AB, transparent 30%),
+        radial-gradient(circle at 90% 80%, #D8AA96, transparent 28%),
+        var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    .custom-navbar {
+      background: rgba(8, 11, 36, .88);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-icon {
+      width: 25px;
+      height: 25px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .text-purple-accent {
+      background: linear-gradient(90deg,#F7B1AB,#cf77c5 );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-link {
+      transition: .2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: white !important;
+    }
+
+    .bg-purple-button {
+      color: white !important;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #F7B1AB,#cf77c5 );
+      transition: .25s;
+    }
+
+    .bg-purple-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(168, 85, 247, .35);
+    }
+
+    .hero {
+      padding: 70px 0 35px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.7rem);
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 15px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#FFFFFF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 680px;
+      margin: auto;
+      font-size: 1.05rem;
+    }
+
+    .main-panel {
+      background: linear-gradient(180deg, rgba(237, 236, 241, 0.94), rgba(12, 11, 37, .96));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.28);
+      padding: 28px;
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: 24px;
+    }
+
+    .form-control, .form-select,
+    .form-control:focus, .form-select:focus {
+      background: #0c102e;
+      color: white;
+      border: 1px solid rgba(148,163,184,.18);
+      box-shadow: none;
+    }
+
+    .form-control::placeholder {
+      color: #676580;
+    }
+
+    .result-section {
+      display: none;
+      animation: fadeUp .45s ease;
+    }
+
+    .result-card {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(168,85,247,.14), transparent 45%),
+        #100d2e;
+      border: 1px solid rgba(168,85,247,.30);
+      border-radius: 20px;
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .result-label {
+      color: #aaa7c1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    .timer-result {
+      font-size: clamp(2.4rem, 7vw, 4.7rem);
+      font-weight: 850;
+      line-height: 1;
+      margin: 13px 0;
+      background: linear-gradient(90deg, #f0abfc, #c084fc, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .diagnosis {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 15px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+      color: #c4c1d4;
+      font-size: .9rem;
+      text-align: left;
+    }
+
+    .diagnosis strong {
+      color: white;
+    }
+
+    .chat-preview {
+      margin-top: 20px;
+      display: grid;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: 10px 13px;
+      border-radius: 14px;
+      font-size: .86rem;
+    }
+
+    .bubble.you {
+      margin-left: auto;
+      background: #4f5fe8;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble.them {
+      background: #c94fbb;
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble small {
+      display: block;
+      opacity: .7;
+      margin-top: 4px;
+      font-size: .68rem;
+    }
+
+    .feature-card {
+      height: 100%;
+      background: rgba(16,13,46,.9);
+      border: 1px solid rgba(148,163,184,.12);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(168,85,247,.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 13px;
+      color: white;
+    }
+
+    .reason-bar-wrapper {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .reason-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    .history-item {
+      background: rgba(16,13,46,.8);
+      border: 1px solid rgba(148,163,184,.10);
+      border-radius: 13px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .history-time {
+      color: #d8b4fe;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .history-empty {
+      color: #77748c;
+      text-align: center;
+      padding: 40px 25px;
+      border: 1px dashed rgba(148,163,184,.16);
+      border-radius: 13px;
+    }
+
+    footer {
+      color: #716e86;
+      text-align: center;
+      padding: 35px 0;
+      font-size: .8rem;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-md navbar-dark custom-navbar py-3">
+    <div class="container">
+
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <div class="logo-icon me-2">
+          <img src="logo1.png" class="logo" alt="Logo">
+        </div>
+        <span class="text-purple-accent">ORACLE</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav gap-md-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="#calculator">Calculator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="#history">History</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="#about">About</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="javascript:void(0)" class="btn bg-purple-button px-3 py-2 fw-medium" id="processBtn" onclick="handleProcessing(event)">
+          Calculate
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <h1>
+        How long did they<br>
+        <span class="gradient-text">take to reply?</span>
+      </h1>
+      <p>
+        Upload your chat history to see who kept whom waiting.
+      </p>
+    </div>
+  </header>
+
+  <main class="container pb-4" id="calculator">
+
+    <!-- INPUT PANEL -->
+    <div class="main-panel p-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-7">
+          <label for="formFileLg" class="form-label text-white fw-bold fs-5 mb-2">WhatsApp Export File (.txt)</label>
+          <input class="form-control form-control-lg" id="formFileLg" type="file" accept=".txt, text/plain" onchange="parseParticipantsFromFile(this)">
+        </div>
+        <div class="col-md-5">
+          <label for="targetPersonSelect" class="form-label text-white fw-bold fs-5 mb-2">Target Person</label>
+          <select id="targetPersonSelect" class="form-select form-select-lg" disabled>
+            <option value="">Upload chat file first...</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT & EXCUSES SECTION -->
+    <section id="resultSection" class="result-section mb-4">
+      <div class="result-card mb-4">
+        <div class="result-label">Predicted Reply Time Delay</div>
+
+        <div id="timerResult" class="timer-result">0h 0m 0s</div>
+
+        <div class="chat-preview mb-4">
+          <div class="bubble you">
+            <span id="resultYourMessage">Target Person: -</span>
+            <small id="resultSentTime">Status: Pending</small>
+          </div>
+          <div class="bubble them">
+            <span id="resultTheirMessage">Expected Reply Time</span>
+            <small id="resultReplyTime">-</small>
+          </div>
+        </div>
+
+        <!-- PULLED UP EXCUSES & WORTH THE WAIT BOXES -->
+        <div class="row g-3 text-start">
+          <div class="col-md-6">
+            <div class="diagnosis h-100">
+              <h6 class="fw-bold text-white mb-2"><i class="fa-solid fa-face-grin-tears text-purple-accent me-2"></i> Likely Excuses</h6>
+              <ul id="excusesList" class="mb-0 ps-3 text-white-50">
+                <li>Select and calculate to analyze excuses...</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="feature-card h-100">
+              <div class="feature-icon" style="background:#9333ea;">
+                <i class="fa-solid fa-hourglass-half"></i>
+              </div>
+              <h5 class="text-white">Was It Worth The Wait?</h5>
+              <p id="worthWaitText" class="text-white-50 mb-0">
+                Calculates if the response quality justifies the calculated delay duration.
+              </p>
+              
+              <!-- PERCENTAGE BREAKDOWN CONTAINER -->
+              <div id="worthWaitBreakdown" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <button id="tryAgainBtn" class="btn bg-purple-button mt-4 px-4">
+          <i class="fa-solid fa-rotate me-2"></i>
+          Analyze Another
+        </button>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="history" class="main-panel my-4 py-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3 class="section-title mb-1">
+            <i class="fa-solid fa-clock-rotate-left text-purple-accent me-2"></i>
+            Reply History
+          </h3>
+          <p class="section-subtitle mb-0">
+            Your previous target predictions and historical statistics.
+          </p>
+        </div>
+        <button id="clearHistoryBtn" class="btn btn-sm btn-outline-secondary">
+          Clear History
+        </button>
+      </div>
+
+      <div id="historyList">
+        <div class="history-empty">
+          No investigations yet. Select a file and target person above 👀
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="main-panel text-center py-5">
+      <h3 class="section-title mb-3">Why does ORACLE exist?</h3>
+      <p class="text-white-50 mx-auto mb-0 fs-5" style="max-width:750px; line-height: 1.7;">
+        Because waiting for replies shouldn't be a mystery. ORACLE evaluates historical message delays, participant interaction speed, and time metrics to accurately predict expected reply windows and provide entertaining diagnostics.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    Made with 💜 and an unhealthy interest in reply times.
+    <br>
+    <span>Good chats. Better reply times. (or not)</span>
+  </footer>
+
+  <script>
+    const API_BASE_URL = "http://127.0.0.1:8000";
+
+    const fileInput = document.getElementById("formFileLg");
+    const targetSelect = document.getElementById("targetPersonSelect");
+    const resultSection = document.getElementById("resultSection");
+    const timerResult = document.getElementById("timerResult");
+
+    const resultYourMessage = document.getElementById("resultYourMessage");
+    const resultSentTime = document.getElementById("resultSentTime");
+    const resultTheirMessage = document.getElementById("resultTheirMessage");
+    const resultReplyTime = document.getElementById("resultReplyTime");
+
+    const excusesList = document.getElementById("excusesList");
+    const worthWaitText = document.getElementById("worthWaitText");
+    const worthWaitBreakdown = document.getElementById("worthWaitBreakdown");
+    const historyList = document.getElementById("historyList");
+
+    let history = JSON.parse(localStorage.getItem("replyTimeHistory") || "[]");
+
+    async function parseParticipantsFromFile(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      targetSelect.innerHTML = '<option value="">Loading contacts...</option>';
+      targetSelect.disabled = true;
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const res = await fetch(`${API_BASE_URL}/api/v1/parse-participants`, {
+          method: "POST",
+          body: formData
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.participants && data.participants.length > 0) {
+            targetSelect.innerHTML = data.participants.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
+            targetSelect.disabled = false;
+            return;
+          }
+        }
+        fallbackSelect();
+      } catch (err) {
+        fallbackSelect();
+      }
+    }
+
+    function fallbackSelect() {
+      targetSelect.innerHTML = '<option value="Target User">Target User</option>';
+      targetSelect.disabled = false;
+    }
+
+    function formatDurationMinutes(minutes) {
+      const totalSeconds = Math.round((minutes || 0) * 60);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = Math.floor(totalSeconds % 60);
+
+      let parts = [];
+      if (days > 0) parts.push(`${days}d`);
+      if (hours > 0 || days > 0) parts.push(`${hours}h`);
+      if (mins > 0 || hours > 0 || days > 0) parts.push(`${mins}m`);
+      parts.push(`${secs}s`);
+
+      return parts.join(" ");
+    }
+
+    async function handleProcessing(e) {
+      if (e) e.preventDefault();
+
+      const btn = document.getElementById('processBtn');
+      if (btn.classList.contains('disabled')) return;
+
+      const file = fileInput.files[0];
+      const targetPerson = targetSelect.value;
+
+      if (!file) {
+        alert("Please upload a WhatsApp text file first!");
+        return;
+      }
+
+      if (!targetPerson) {
+        alert("Please select a target person!");
+        return;
+      }
+
+      btn.classList.add('disabled');
+      btn.style.pointerEvents = 'none';
+      btn.textContent = 'Calculating...';
+
+      try {
+        const predictUrl = `${API_BASE_URL}/predict?target_person=${encodeURIComponent(targetPerson)}&message=hi`;
+        const predictFormData = new FormData();
+        predictFormData.append("file", file);
+
+        const predictRes = await fetch(predictUrl, {
+          method: "POST",
+          body: predictFormData
+        });
+
+        if (!predictRes.ok) {
+          const errorDetail = await predictRes.json();
+          throw new Error(errorDetail.detail || "Prediction failed");
+        }
+
+        const data = await predictRes.json();
+
+        // 1. Extract backend output fields
+        const target = data.target_person || targetPerson;
+        const predMinutes = data.predicted_delay_min || 0;
+        const expectedTime = data.expected_reply_time || "N/A";
+        const excusesArr = data.excuses || [];
+        const stats = data.historical_stats || {};
+        const breakdownArr = data.worth_the_wait_breakdown || data.breakdown || [];
+
+        // 2. Render Timer Result
+        timerResult.textContent = formatDurationMinutes(predMinutes);
+
+        // 3. Render Chat Preview
+        resultYourMessage.textContent = `Target Person: ${target}`;
+        resultSentTime.textContent = `Sent: Now`;
+        resultTheirMessage.textContent = `Expected Reply Time`;
+        resultReplyTime.textContent = expectedTime;
+
+        // 4. Render Excuses
+        if (excusesArr.length > 0) {
+          excusesList.innerHTML = excusesArr.map(ex => `<li>"${escapeHtml(ex)}"</li>`).join("");
+        } else {
+          excusesList.innerHTML = `<li>No specific excuse pattern detected.</li>`;
+        }
+
+        // 5. Render "Was It Worth The Wait?" & Breakdown
+        if (breakdownArr && breakdownArr.length > 0) {
+          worthWaitText.textContent = "Estimated probability breakdown for the delay:";
+          worthWaitBreakdown.innerHTML = breakdownArr.map(item => `
+            <div class="mb-2">
+              <div class="d-flex justify-content-between small mb-1">
+                <span class="text-white-50">${escapeHtml(item.label)}</span>
+                <span class="fw-bold text-white">${item.percentage}%</span>
+              </div>
+              <div class="reason-bar-wrapper">
+                <div class="reason-bar-fill" style="width: ${item.percentage}%;"></div>
+              </div>
+            </div>
+          `).join("");
+        } else {
+          worthWaitBreakdown.innerHTML = "";
+          if (predMinutes < 15) {
+            worthWaitText.textContent = "High priority response expected! Response speed justifies quick engagement.";
+          } else if (predMinutes < 120) {
+            worthWaitText.textContent = "Standard wait window. Response content typically worth normal waiting times.";
+          } else {
+            worthWaitText.textContent = "Long delay detected. Set lower expectations for response immediacy.";
+          }
+        }
+
+        // 6. Save item into history
+        const historyItem = {
+          target_person: target,
+          predicted_delay_min: predMinutes,
+          expected_reply_time: expectedTime,
+          duration: formatDurationMinutes(predMinutes),
+          historical_stats: stats,
+          date: new Date().toLocaleString()
+        };
+
+        history.unshift(historyItem);
+        history = history.slice(0, 8);
+        localStorage.setItem("replyTimeHistory", JSON.stringify(history));
+        renderHistory();
+
+        // Reveal Result Section
+        resultSection.style.display = "block";
+        resultSection.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      } catch (err) {
+        alert("Error: " + err.message);
+      } finally {
+        btn.classList.remove('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.textContent = 'Calculate';
+      }
+    }
+
+    function renderHistory() {
+      if (history.length === 0) {
+        historyList.innerHTML = `
+          <div class="history-empty">
+            No investigations yet. Select a file and target person above 👀
+          </div>
+        `;
+        return;
+      }
+
+      historyList.innerHTML = history.map((item) => `
+        <div class="history-item">
+          <div>
+            <div class="fw-bold text-white fs-6">
+              Target: ${escapeHtml(item.target_person)}
+            </div>
+            <div class="small text-white-50 mt-1">
+              Expected around: ${escapeHtml(item.expected_reply_time)} | Calculated: ${item.date}
+            </div>
+          </div>
+
+          <div class="text-end">
+            <div class="history-time">${item.duration}</div>
+            <div class="small text-purple-accent">Predicted Delay</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    document.getElementById("tryAgainBtn").addEventListener("click", () => {
+      resultSection.style.display = "none";
+      fileInput.value = "";
+      targetSelect.innerHTML = '<option value="">Upload chat file first...</option>';
+      targetSelect.disabled = true;
+      worthWaitBreakdown.innerHTML = "";
+      worthWaitText.textContent = "Calculates if the response quality justifies the calculated delay duration.";
+      document.getElementById("calculator").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("clearHistoryBtn").addEventListener("click", () => {
+      history = [];
+      localStorage.removeItem("replyTimeHistory");
+      renderHistory();
+    });
+
+    renderHistory();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
