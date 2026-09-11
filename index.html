@@ -132,7 +132,7 @@
     }
 
     .main-panel {
-      background: linear-gradient(180deg, rgba(237, 236, 241, 0.94), rgba(12, 11, 37, .96));
+      background: linear-gradient(180deg, #F7B1AB,#cf77c5);
       border: 1px solid var(--border);
       border-radius: 22px;
       box-shadow: 0 25px 80px rgba(0,0,0,.28);
@@ -195,6 +195,9 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+    }
+    main{
+      padding-bottom:150px ! important;
     }
 
     .diagnosis {
@@ -311,6 +314,9 @@
       border: 1px dashed rgba(148,163,184,.16);
       border-radius: 13px;
     }
+    #history{
+      scroll-margin-top: 80px;
+    }
 
     footer {
       color: #716e86;
@@ -352,7 +358,9 @@
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav gap-md-3">
           <li class="nav-item">
-            <a class="nav-link active" href="#calculator">Calculator</a>
+           <a class="nav-link active" href="#calculator" onclick="window.scrollTo({top: document.getElementById('calculator').offsetTop - 80, behavior: 'smooth'}); return false;">
+    Calculator
+</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white-50" href="#history">History</a>
@@ -390,15 +398,15 @@
     <!-- INPUT PANEL -->
     <div class="main-panel p-4">
       <div class="row g-3 align-items-end">
-        <div class="col-md-7">
-          <label for="formFileLg" class="form-label text-white fw-bold fs-5 mb-2">WhatsApp Export File (.txt)</label>
+        <div class="col-md-6">
+          <label for="formFileLg" class="form-label text-white fw-bold fs-5 mb-2">Upload WhatsApp Export File (.txt)</label>
           <input class="form-control form-control-lg" id="formFileLg" type="file" accept=".txt, text/plain" onchange="parseParticipantsFromFile(this)">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
           <label for="targetPersonSelect" class="form-label text-white fw-bold fs-5 mb-2">Target Person</label>
-          <select id="targetPersonSelect" class="form-select form-select-lg" disabled>
-            <option value="">Upload chat file first...</option>
-          </select>
+         <select id="targetPersonSelect" class="form-select form-select-lg bg-white text-dark" disabled>
+           <option value="" style="color: black;" disabled selected>Upload chat file first...</option>
+        </select>
         </div>
       </div>
     </div>
@@ -459,12 +467,9 @@
       <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h3 class="section-title mb-1">
-            <i class="fa-solid fa-clock-rotate-left text-purple-accent me-2"></i>
+           <i class="fa-solid fa-clock-rotate-left me-2" style="color: #807182;"></i>
             Reply History
           </h3>
-          <p class="section-subtitle mb-0">
-            Your previous target predictions and historical statistics.
-          </p>
         </div>
         <button id="clearHistoryBtn" class="btn btn-sm btn-outline-secondary">
           Clear History
@@ -480,8 +485,9 @@
 
     <!-- ABOUT -->
     <section id="about" class="main-panel text-center py-5">
-      <h3 class="section-title mb-3">Why does ORACLE exist?</h3>
-      <p class="text-white-50 mx-auto mb-0 fs-5" style="max-width:750px; line-height: 1.7;">
+      <h3 class="section-title mb-3" style="color:#807182 ;">Why does ORACLE exist?</h3>
+     <!-- Example changing the text to Bootstrap's primary blue color -->
+     <p class="text-white-75 mx-auto mb-0 fs-5" style="max-width:750px; line-height:1.7;">
         Because waiting for replies shouldn't be a mystery. ORACLE evaluates historical message delays, participant interaction speed, and time metrics to accurately predict expected reply windows and provide entertaining diagnostics.
       </p>
     </section>
