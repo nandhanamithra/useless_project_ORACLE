@@ -24,13 +24,21 @@ app.add_middleware(
 )
 
 @app.post("/api/v1/parse-participants")
-async def get_participants(file: UploadFile = File(...)):
-    """Uploads chat file and returns list of unique senders."""
-    content = await file.read()
+async def parse_participants(file: UploadFile = File(...)):
     try:
-        df = parse_whatsapp_txt(content)
-        participants = df["sender"].unique().tolist()
-        return {"participants": participants}
+        # Read uploaded file content
+        content = await file.read()
+        text = content.decode("utf-8", errors="ignore")
+        
+        # Simple extraction logic (adjust according to your parser logic)
+        senders = set()
+        for line in text.splitlines():
+            if " - " in line and ":" in line.split(" - ", 1)[1]:
+                sender = line.split(" - ", 1)[1].split(":", 1)[0].strip()
+                if sender:
+                    senders.add(sender)
+                    
+        return {"participants": sorted(list(senders))}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
