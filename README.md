@@ -38,22 +38,22 @@ For Software:
 For Hardware: nil
 
 ### Implementation
-# Clone the repository
+## Clone the repository
 git clone https://github.com/your-username/oracle.git
 cd oracle
 
-# Create and activate a virtual environment
+## Create and activate a virtual environment
 python -m venv venv
 
-# On Windows:
+## On Windows:
 venv\Scripts\activate
 # On macOS/Linux:
 source venv/bin/activate
 
-# Installation
+## Installation
 pip install -r requirements.txt
 
-# Run
+## Run
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 
 ### Project Documentation
