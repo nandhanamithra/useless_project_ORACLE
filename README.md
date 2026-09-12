@@ -83,7 +83,7 @@ The above image is a proof of how efficient the program is in terms of using the
 
 ### Project Demo
 # Video
-[]
+[https://github.com/nandhanamithra/useless_project_ORACLE/blob/main/WhatsApp%20Video%202026-09-12%20at%206.04.18%20AM-compressed.mp4]
 
 
 ## Team Contributions
