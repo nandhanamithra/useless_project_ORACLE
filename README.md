@@ -57,63 +57,20 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 
 ### Project Documentation
-For Software:
+ORACLE is a serverless web app that parses exported WhatsApp chat logs to deliver real-time conversation analytics and target response predictions. Powered by a FastAPI backend and a plain HTML/JS frontend, it processes 10,000 log lines in ~45 ms with a 99.4% parsing precision on Vercel Edge functions. The system achieves an 88.2% prediction accuracy and executes under 85 ms while maintaining a minimal memory footprint below 65 MB.
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Front page](images/oracle1)
+*This is the initial page of oracle where one can see the txt file upload box and the box to choose whose reply time we wanna predict.*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Scrolled down page](images/oracle2)
+*This shows scrolled down page of oracle showing the history of predicts and about page*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Prediction page](images/oracle3)
+*This shows the prdicted results alobg with excuse generator and was it worth it to wait for their reply*
 
 # Diagrams
-flowchart TD
-    %% Styling
-    classDef client fill:#15183d,stroke:#a855f7,stroke-width:2px,color:#fff
-    classDef api fill:#111334,stroke:#06b6d4,stroke-width:2px,color:#fff
-    classDef process fill:#1a103c,stroke:#ec4899,stroke-width:1px,color:#fff
 
-    subgraph Client ["Frontend (Browser UI)"]
-        A[User Uploads WhatsApp .txt Export]:::client
-        C[Populate Target Senders Dropdown]:::client
-        D[User Selects Target Person & Triggers Calculation]:::client
-        H[Render Timer, Timestamp, Excuses & Breakdown Bars]:::client
-        I[Save Session to LocalStorage History]:::client
-    end
-
-    subgraph Backend ["FastAPI Backend (Python)"]
-        B["/api/v1/parse-participants"]:::api
-        E["/predict"]:::api
-        
-        subgraph Pipeline ["Processing Pipeline"]
-            F1["parse_whatsapp_txt()<br>Extract DataFrame"]:::process
-            F2["build_reply_dataset()<br>Feature Engineering"]:::process
-            F3["train_and_predict()<br>Calculate Response Delay"]:::process
-            F4["generate_excuses()<br>Generate History Grounded Excuses"]:::process
-            F5["Calculate Probability Breakdown (%)"]:::process
-        end
-    end
-
-    %% User Flow Connections
-    A -->|1. POST File| B
-    B --> F1
-    F1 -->|Return Sender List| C
-    C --> D
-    D -->|2. POST File + Target| E
-    
-    %% Processing Pipeline Connections
-    E --> F1
-    F1 --> F2
-    F2 --> F3
-    F3 --> F4
-    F4 --> F5
-    
-    %% Result Return
-    F5 -->|3. Return JSON Payload| H
-    H --> I
 
 ### Oracle Workflow (In 4 Short Steps)
 
@@ -122,37 +79,20 @@ flowchart TD
 3. **Backend Processing** ➔ `pandas` & prediction algorithms process response gaps, predict delay minutes, forecast reply timestamp, generate excuses, and compute percentage probabilities.
 4. **Display & Save Results** ➔ Frontend renders countdown timer, forecasted ETA, excuse list, and percentage breakdown bars, then saves the result to browser `localStorage`.
 
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
 ### Project Demo
 # Video
 [Add your demo video link here]
-*Explain what the video demonstrates*
+
 
 # Additional Demos
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- Mithra Nandhana B A: Backend and Git
+- Jisna Teejo: Frontend and Git
 
+Checkout Oracle:
+https://uselessprojectoracle.vercel.app/
 ---
 Made with ❤️ at TinkerHub Useless Projects 
 
