@@ -58,21 +58,21 @@ uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 
 ### Project Documentation
 ORACLE is a serverless web app that parses exported WhatsApp chat logs to deliver real-time conversation analytics and target response predictions. Powered by a FastAPI backend and a plain HTML/JS frontend, it processes 10,000 log lines in ~45 ms with a 99.4% parsing precision on Vercel Edge functions. The system achieves an 88.2% prediction accuracy and executes under 85 ms while maintaining a minimal memory footprint below 65 MB.
-![Model Evaluation](images/documentation)
+![Model Evaluation](images/documentation.png)
 The above image is a proof of how efficient the program is in terms of using the model to its full potential. We have tested it using our chats and it is given in the chats table along with other evaluations for complete efficiency. Model used was Random Forest Regressor.
 
 # Screenshots (Add at least 3)
-![Front page](images/oracle1)
+![Front page](images/oracle1.png)
 *This is the initial page of oracle where one can see the txt file upload box and the box to choose whose reply time we wanna predict.*
 
-![Scrolled down page](images/oracle2)
+![Scrolled down page](images/oracle2.png)
 *This shows scrolled down page of oracle showing the history of predicts and about page*
 
-![Prediction page](images/oracle3)
+![Prediction page](images/oracle3.png)
 *This shows the prdicted results alobg with excuse generator and was it worth it to wait for their reply*
 
 # Diagrams
-![Workflow](images/workflow)
+![Workflow](images/workflow.png)
 
 ### Oracle Workflow (In 4 Short Steps)
 
