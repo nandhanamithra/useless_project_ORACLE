@@ -1,6 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "functions": {
+    "api/*.py": {
+      "includeFiles": "logo1.png"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/v1/:path*",
